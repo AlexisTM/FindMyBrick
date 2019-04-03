@@ -24,3 +24,9 @@ If you are lazy, you can just run serve.py which will create a key with the `-ba
 ```python
 python3 serve.py
 ```
+
+## Running
+
+![Example 1](doc/Example1.jpg)
+![Example 2](doc/Example2.jpg)
+![Example 3](doc/Example3.jpg)
