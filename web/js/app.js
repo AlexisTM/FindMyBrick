@@ -25,13 +25,13 @@ function cameraStart() {
 }
 
 function RGBToHue(data) {
-  let r = data[0]/255;
-  let g = data[1]/255;
-  let b = data[2]/255
-  let min = Math.min(Math.min(r, g), b);
-  let max = Math.max(Math.max(r, g), b);
+  const r = data[0]/255;
+  const g = data[1]/255;
+  const b = data[2]/255
+  const min = Math.min(Math.min(r, g), b);
+  const max = Math.max(Math.max(r, g), b);
 
-  let delta = max-min;
+  const delta = max-min;
   if (delta == 0) {
       // Hue is unknown; Not a color: Black, White or Gray
       return null;
@@ -54,17 +54,15 @@ function RGBToHue(data) {
   return Math.round(hue);
 }
 
-
-var limit = 15;
 function grayScale(color) {
-  let imgData = cameraCtx.getImageData(0, 0, cameraShadow.width, cameraShadow.height);
-    let pixels  = imgData.data;
+  const imgData = cameraCtx.getImageData(0, 0, cameraShadow.width, cameraShadow.height);
+    const pixels  = imgData.data;
     for (var i = 0, n = pixels.length; i < n; i += 4) {
-      let data = pixels.slice(i, i+3);
-      let hue = RGBToHue(data);
+      const data = pixels.slice(i, i+3);
+      const hue = RGBToHue(data);
       if(hue != null) {
-        if(Math.abs(hue - tracked_hue) > limit) {
-          let grayscale = pixels[i] * .3 + pixels[i+1] * .59 + pixels[i+2] * .11;
+        if(Math.abs(hue - tracked_hue) > 15) {
+          const grayscale = pixels[i] * .3 + pixels[i+1] * .59 + pixels[i+2] * .11;
           pixels[i  ] = grayscale;
           pixels[i+1] = grayscale;
           pixels[i+2] = grayscale;
@@ -79,9 +77,6 @@ function loop(){
   cameraShadow.width = cameraView.videoWidth;
   cameraShadow.height = cameraView.videoHeight;
   cameraCtx.drawImage(cameraView, 0, 0);
-  if(tracked_color) {
-    grayScale(tracked_color);
-  }
   if(tracked_hue) {
     grayScale(tracked_hue);
   }
